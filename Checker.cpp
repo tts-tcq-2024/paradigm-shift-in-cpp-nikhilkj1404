@@ -1,10 +1,14 @@
 #include <assert.h>
 #include <iostream>
 using namespace std;
+
+void printErrorMessage(const char* parameter) {
+ cout << parameter << "out of range!\n";
+}
  
 bool isTemperatureOk(float temperature) {
   if(temperature < 0 || temperature > 45) {
-    cout << "Temperature out of range!\n";
+    printErrorMessage("Temperature");
     return false;
   }
   return true;
@@ -12,7 +16,7 @@ bool isTemperatureOk(float temperature) {
  
 bool isSocOk(float soc) {
   if(soc < 20 || soc > 80) {
-    cout << "State of Charge out of range!\n";
+    printErrorMessage("State of Charge");
     return false;
   }
   return true;
@@ -20,7 +24,7 @@ bool isSocOk(float soc) {
  
 bool isChargeRateOk(float chargeRate) {
   if(chargeRate > 0.8) {
-    cout << "Charge Rate out of range!\n";
+    printErrorMessage("Charge Rate");
     return false;
   }
   return true;
