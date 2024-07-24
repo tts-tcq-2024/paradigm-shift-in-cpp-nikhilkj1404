@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 
-// Enumeration to represent the status of each parameter
 enum ParameterStatus {
     LOW_BREACH,
     LOW_WARNING,
@@ -11,7 +10,6 @@ enum ParameterStatus {
     HIGH_BREACH
 };
 
-// Structure to hold the boundary values for each condition
 struct ParameterRange {
     float lowBreach;
     float lowWarning;
@@ -19,7 +17,6 @@ struct ParameterRange {
     float highBreach;
 };
 
-// Function to determine if the value is in breach
 ParameterStatus getBreachStatus(float value, const ParameterRange& range) {
     if (value < range.lowBreach) {
         return LOW_BREACH;
@@ -27,10 +24,9 @@ ParameterStatus getBreachStatus(float value, const ParameterRange& range) {
     if (value >= range.highBreach) {
         return HIGH_BREACH;
     }
-    return NORMAL; // Not in breach
+    return NORMAL; 
 }
 
-// Function to determine the warning status
 ParameterStatus getWarningStatus(float value, const ParameterRange& range) {
     if (value < range.lowWarning) {
         return LOW_WARNING;
@@ -38,26 +34,26 @@ ParameterStatus getWarningStatus(float value, const ParameterRange& range) {
     if (value >= range.highWarning) {
         return HIGH_WARNING;
     }
-    return NORMAL; // Normal if not in any warning range
+    return NORMAL; 
 }
 
-// Function to determine the status of a parameter given its range
+
 ParameterStatus getParameterStatus(float value, const ParameterRange& range) {
     ParameterStatus breachStatus = getBreachStatus(value, range);
     if (breachStatus != NORMAL) {
-        return breachStatus;  // Return if it's a breach
+        return breachStatus;  
     }
-    return getWarningStatus(value, range); // Check warning status if not a breach
+    return getWarningStatus(value, range); 
 }
 
-// Function to translate the parameter status to a human-readable message
+
 std::string translateStatusToMessage(const std::string& parameter, ParameterStatus status) {
     static const std::string messages[] = {
-        parameter + " is below the safe range!",   // LOW_BREACH
-        "Warning: " + parameter + " is approaching discharge.", // LOW_WARNING
-        parameter + " is normal.",                // NORMAL
-        "Warning: " + parameter + " is approaching charge-peak.", // HIGH_WARNING
-        parameter + " is above the safe range!"   // HIGH_BREACH
+        parameter + " is below the safe range!",   
+        "Warning: " + parameter + " is approaching discharge.", 
+        parameter + " is normal.",                
+        "Warning: " + parameter + " is approaching charge-peak.", 
+        parameter + " is above the safe range!"   
     };
 
     if (status < LOW_BREACH || status > HIGH_BREACH) {
@@ -67,7 +63,7 @@ std::string translateStatusToMessage(const std::string& parameter, ParameterStat
     return messages[status];
 }
 
-// Function to check the temperature status and print appropriate messages
+
 bool checkTemperature(float temperature) {
     ParameterRange temperatureRange = {0, 0 + 45 * 0.05, 45 - 45 * 0.05, 45};
     ParameterStatus status = getParameterStatus(temperature, temperatureRange);
@@ -75,7 +71,7 @@ bool checkTemperature(float temperature) {
     return status != LOW_BREACH && status != HIGH_BREACH;
 }
 
-// Function to check the State of Charge (SoC) status and print appropriate messages
+
 bool checkSoc(float soc) {
     ParameterRange socRange = {20, 20 + 80 * 0.05, 80 - 80 * 0.05, 80};
     ParameterStatus status = getParameterStatus(soc, socRange);
@@ -83,7 +79,7 @@ bool checkSoc(float soc) {
     return status != LOW_BREACH && status != HIGH_BREACH;
 }
 
-// Function to check the charge rate status and print appropriate messages
+
 bool checkChargeRate(float chargeRate) {
     ParameterRange chargeRateRange = {0, 0, 0.8 - 0.8 * 0.05, 0.8};
     ParameterStatus status = getParameterStatus(chargeRate, chargeRateRange);
@@ -91,7 +87,7 @@ bool checkChargeRate(float chargeRate) {
     return status != LOW_BREACH && status != HIGH_BREACH;
 }
 
-// Function to evaluate the overall battery status
+
 bool batteryIsOk(float temperature, float soc, float chargeRate) {
     bool tempOk = checkTemperature(temperature);
     bool socOk = checkSoc(soc);
