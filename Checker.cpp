@@ -21,37 +21,28 @@ struct ParameterRange {
 
 // Function to determine the status of a parameter given its range
 ParameterStatus getParameterStatus(float value, const ParameterRange& range) {
-    if (value < range.lowBreach) {
-        return LOW_BREACH;
-    }
-    if (value >= range.highBreach) {
-        return HIGH_BREACH;
-    }
-    if (value < range.lowWarning) {
-        return LOW_WARNING;
-    }
-    if (value >= range.highWarning) {
-        return HIGH_WARNING;
-    }
-    return NORMAL;
+    if (value < range.lowBreach) return LOW_BREACH;
+    if (value >= range.highBreach) return HIGH_BREACH;
+
+    return (value < range.lowWarning) ? LOW_WARNING :
+           (value >= range.highWarning) ? HIGH_WARNING : NORMAL;
 }
 
 // Function to translate the parameter status to a human-readable message
 std::string translateStatusToMessage(const std::string& parameter, ParameterStatus status) {
-    switch (status) {
-        case LOW_BREACH:
-            return parameter + " is below the safe range!";
-        case LOW_WARNING:
-            return "Warning: " + parameter + " is approaching discharge.";
-        case NORMAL:
-            return parameter + " is normal.";
-        case HIGH_WARNING:
-            return "Warning: " + parameter + " is approaching charge-peak.";
-        case HIGH_BREACH:
-            return parameter + " is above the safe range!";
-        default:
-            return "Unknown status for " + parameter;
+    static const std::string messages[] = {
+        parameter + " is below the safe range!",
+        "Warning: " + parameter + " is approaching discharge.",
+        parameter + " is normal.",
+        "Warning: " + parameter + " is approaching charge-peak.",
+        parameter + " is above the safe range!"
+    };
+
+    if (status < LOW_BREACH || status > HIGH_BREACH) {
+        return "Unknown status for " + parameter;
     }
+
+    return messages[status];
 }
 
 // Function to check the temperature status and print appropriate messages
