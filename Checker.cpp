@@ -57,7 +57,7 @@ bool checkTemperature(float temperature) {
     ParameterRange temperatureRange = {0, 0 + 45 * 0.05, 45 - 45 * 0.05, 45};
     ParameterStatus status = getParameterStatus(temperature, temperatureRange);
     std::cout << translateStatusToMessage("Temperature", status) << std::endl;
-    return status == NORMAL;
+    return status != LOW_BREACH && status != HIGH_BREACH;
 }
 
 // Function to check the State of Charge (SoC) status and print appropriate messages
@@ -65,7 +65,7 @@ bool checkSoc(float soc) {
     ParameterRange socRange = {20, 20 + 80 * 0.05, 80 - 80 * 0.05, 80};
     ParameterStatus status = getParameterStatus(soc, socRange);
     std::cout << translateStatusToMessage("State of Charge", status) << std::endl;
-    return status == NORMAL;
+    return status != LOW_BREACH && status != HIGH_BREACH;
 }
 
 // Function to check the charge rate status and print appropriate messages
@@ -73,7 +73,7 @@ bool checkChargeRate(float chargeRate) {
     ParameterRange chargeRateRange = {0, 0, 0.8 - 0.8 * 0.05, 0.8};
     ParameterStatus status = getParameterStatus(chargeRate, chargeRateRange);
     std::cout << translateStatusToMessage("Charge Rate", status) << std::endl;
-    return status == NORMAL;
+    return status != LOW_BREACH && status != HIGH_BREACH;
 }
 
 // Function to evaluate the overall battery status
@@ -86,8 +86,8 @@ bool batteryIsOk(float temperature, float soc, float chargeRate) {
 
 int main() {
     // Test cases to verify battery safety checks and warning messages
-    assert(batteryIsOk(25, 70, 0.7) == true); // Within normal range
-    assert(batteryIsOk(50, 85, 0) == false);  // Temperature and SoC out of range
+    assert(batteryIsOk(25, 70, 0.7) == true);  // Within normal range
+    assert(batteryIsOk(50, 85, 0) == false);   // Temperature and SoC out of range
     assert(batteryIsOk(-1, 50, 0.5) == false); // Temperature out of range
     assert(batteryIsOk(25, 10, 0.5) == false); // SoC out of range
     assert(batteryIsOk(25, 50, 0.9) == false); // Charge rate out of range
