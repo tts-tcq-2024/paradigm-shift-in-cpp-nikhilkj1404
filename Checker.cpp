@@ -23,15 +23,17 @@ struct ParameterRange {
 ParameterStatus getParameterStatus(float value, const ParameterRange& range) {
     if (value < range.lowBreach) {
         return LOW_BREACH;
-    } else if (value < range.lowWarning) {
-        return LOW_WARNING;
-    } else if (value < range.highWarning) {
-        return NORMAL;
-    } else if (value < range.highBreach) {
-        return HIGH_WARNING;
-    } else {
+    }
+    if (value >= range.highBreach) {
         return HIGH_BREACH;
     }
+    if (value < range.lowWarning) {
+        return LOW_WARNING;
+    }
+    if (value >= range.highWarning) {
+        return HIGH_WARNING;
+    }
+    return NORMAL;
 }
 
 // Function to translate the parameter status to a human-readable message
