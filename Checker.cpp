@@ -19,23 +19,45 @@ struct ParameterRange {
     float highBreach;
 };
 
+// Function to determine if the value is in breach
+ParameterStatus getBreachStatus(float value, const ParameterRange& range) {
+    if (value < range.lowBreach) {
+        return LOW_BREACH;
+    }
+    if (value >= range.highBreach) {
+        return HIGH_BREACH;
+    }
+    return NORMAL; // Not in breach
+}
+
+// Function to determine the warning status
+ParameterStatus getWarningStatus(float value, const ParameterRange& range) {
+    if (value < range.lowWarning) {
+        return LOW_WARNING;
+    }
+    if (value >= range.highWarning) {
+        return HIGH_WARNING;
+    }
+    return NORMAL; // Normal if not in any warning range
+}
+
 // Function to determine the status of a parameter given its range
 ParameterStatus getParameterStatus(float value, const ParameterRange& range) {
-    if (value < range.lowBreach) return LOW_BREACH;
-    if (value >= range.highBreach) return HIGH_BREACH;
-
-    return (value < range.lowWarning) ? LOW_WARNING :
-           (value >= range.highWarning) ? HIGH_WARNING : NORMAL;
+    ParameterStatus breachStatus = getBreachStatus(value, range);
+    if (breachStatus != NORMAL) {
+        return breachStatus;  // Return if it's a breach
+    }
+    return getWarningStatus(value, range); // Check warning status if not a breach
 }
 
 // Function to translate the parameter status to a human-readable message
 std::string translateStatusToMessage(const std::string& parameter, ParameterStatus status) {
     static const std::string messages[] = {
-        parameter + " is below the safe range!",
-        "Warning: " + parameter + " is approaching discharge.",
-        parameter + " is normal.",
-        "Warning: " + parameter + " is approaching charge-peak.",
-        parameter + " is above the safe range!"
+        parameter + " is below the safe range!",   // LOW_BREACH
+        "Warning: " + parameter + " is approaching discharge.", // LOW_WARNING
+        parameter + " is normal.",                // NORMAL
+        "Warning: " + parameter + " is approaching charge-peak.", // HIGH_WARNING
+        parameter + " is above the safe range!"   // HIGH_BREACH
     };
 
     if (status < LOW_BREACH || status > HIGH_BREACH) {
