@@ -10,7 +10,7 @@ const BreachRange SOC_BREACH_RANGE = {20, 80};
 const WarningRange SOC_WARNING_RANGE = {20 + 80 * 0.05, 80 - 80 * 0.05};
 
 const BreachRange CHARGE_RATE_BREACH_RANGE = {0, 0.8};
-const WarningRange CHARGE_RATE_WARNING_RANGE = {0, 0.8 - 0.8 * 0.05};
+const WarningRange CHARGE_RATE_WARNING_RANGE = {0 + 0.8 * 0.05, 0.8 - 0.8 * 0.05};
 
 ParameterStatus getWarningStatus(float value, const WarningRange& range) {
     if (value < range.lowWarning) {
