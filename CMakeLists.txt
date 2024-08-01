@@ -18,8 +18,8 @@ enable_testing()
 add_compile_options("--coverage")
 add_executable(
   cleancode
-  Checker.cpp
-  Checker.Tests.cpp
+  BatteryChecker.cpp
+  BatteryChecker.Tests.cpp
 )
 target_link_libraries(
   cleancode
