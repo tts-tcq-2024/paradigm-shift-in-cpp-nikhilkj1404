@@ -76,18 +76,18 @@ std::string statusToMessageTranslation(const std::string& parameter, ParameterSt
 
 bool checkTemperature(float temperature) {
     ParameterStatus status = getParameterStatus(temperature, TEMPERATURE_BREACH_RANGE, TEMPERATURE_WARNING_RANGE);
-    return status;
+    return status != LOW_BREACH && status != HIGH_BREACH;
 }
 
 bool checkSoc(float soc) {
     ParameterStatus status = getParameterStatus(soc, SOC_BREACH_RANGE, SOC_WARNING_RANGE);
-    return status;
+    return status != LOW_BREACH && status != HIGH_BREACH;
 }
 
 
 bool checkChargeRate(float chargeRate) {
     ParameterStatus status = getParameterStatus(chargeRate, CHARGE_RATE_BREACH_RANGE, CHARGE_RATE_WARNING_RANGE);
-    return status;
+    return status != LOW_BREACH && status != HIGH_BREACH;
 }
 
 
