@@ -5,33 +5,45 @@
 #include <string>
 
 
-enum BreachStatus {
-    NO_BREACH,
-    LOW_BREACH,
-    HIGH_BREACH
-};
-
 enum WarningStatus {
     NO_WARNING,
     LOW_WARNING,
     HIGH_WARNING
 };
 
-struct ParameterRange {
+
+enum BreachStatus {
+    NO_BREACH,
+    LOW_BREACH,
+    HIGH_BREACH
+};
+
+
+enum ParameterStatus {
+    NORMAL,
+    LOW_WARNING,
+    HIGH_WARNING,
+    LOW_BREACH,
+    HIGH_BREACH
+};
+
+
+struct BreachRange {
     float lowBreach;
-    float lowWarning;
-    float highWarning;
     float highBreach;
 };
 
-BreachStatus getBreachStatus(float value, const BreachRange& range);
-WarningStatus getWarningStatus(float value, const WarningRange& range);
-ParameterStatus getParameterStatus(float value, const BreachRange& breachRange, const WarningRange& warningRange);
-std::string statusToMessageTranslation(const std::string& parameter, ParameterStatus parameterStatus)
 
-bool checkTemperature(float temperature);
-bool checkSoc(float soc);
-bool checkChargeRate(float chargeRate);
+struct WarningRange {
+    float lowWarning;
+    float highWarning;
+};
+
+
+WarningStatus getWarningStatus(float value, const WarningRange& range);
+BreachStatus getBreachStatus(float value, const BreachRange& range);
+ParameterStatus getParameterStatus(float value, const BreachRange& breachRange, const WarningRange& warningRange);
+std::string statusToMessageTranslation(const std::string& parameter, ParameterStatus parameterStatus);
 bool batteryIsOk(float temperature, float soc, float chargeRate);
 
-#endif
+#endif // CHECKER_H
