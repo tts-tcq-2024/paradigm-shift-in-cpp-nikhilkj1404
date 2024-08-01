@@ -1,6 +1,6 @@
 // Checker.Tests.cpp
 #include <gtest/gtest.h>
-#include "Checker.h"
+#include "BatteryChecker.h"
 
 TEST(BatteryTest, NormalConditions) {
     EXPECT_TRUE(batteryIsOk(25.0, 50.0, 0.5));
