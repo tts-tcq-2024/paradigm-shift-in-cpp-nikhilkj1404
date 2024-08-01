@@ -93,6 +93,10 @@ bool checkChargeRate(float chargeRate) {
 
 bool batteryIsOk(float temperature, float soc, float chargeRate) {
     
+    ParameterStatus tempStatus = getParameterStatus(temperature, TEMPERATURE_BREACH_RANGE, TEMPERATURE_WARNING_RANGE);
+    ParameterStatus socStatus = getParameterStatus(soc, SOC_BREACH_RANGE, SOC_WARNING_RANGE);
+    ParameterStatus chargeRateStatus = getParameterStatus(chargeRate, CHARGE_RATE_BREACH_RANGE, CHARGE_RATE_WARNING_RANGE);
+    
     bool tempOk = checkTemperature(temperature);
     bool socOk = checkSoc(soc);
     bool chargeRateOk = checkChargeRate(chargeRate);
