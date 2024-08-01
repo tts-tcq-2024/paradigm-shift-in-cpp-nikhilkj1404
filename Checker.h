@@ -5,24 +5,23 @@
 #include <string>
 
 
-enum ParameterStatus {
+enum BreachStatus {
+    NO_BREACH,
     LOW_BREACH,
-    LOW_WARNING,
-    NORMAL,
-    HIGH_WARNING,
     HIGH_BREACH
 };
 
-
-struct BreachRange {
-    float lowBreach;
-    float highBreach;
+enum WarningStatus {
+    NO_WARNING,
+    LOW_WARNING,
+    HIGH_WARNING
 };
 
-
-struct WarningRange {
+struct ParameterRange {
+    float lowBreach;
     float lowWarning;
     float highWarning;
+    float highBreach;
 };
 
 BreachStatus getBreachStatus(float value, const BreachRange& range);
