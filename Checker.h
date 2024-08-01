@@ -5,21 +5,21 @@
 #include <string>
 
 
-enum WarningStatus {
+enum class WarningStatus {
     NO_WARNING,
     LOW_WARNING,
     HIGH_WARNING
 };
 
 
-enum BreachStatus {
+enum class BreachStatus {
     NO_BREACH,
     LOW_BREACH,
     HIGH_BREACH
 };
 
 
-enum ParameterStatus {
+enum class ParameterStatus {
     NORMAL,
     LOW_WARNING,
     HIGH_WARNING,
