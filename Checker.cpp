@@ -75,13 +75,12 @@ std::string statusToMessageTranslation(const std::string& parameter, ParameterSt
         return parameter + " is normal.";
     }
 
-
-    std::string message = getBreachMessage(parameter, static_cast<BreachStatus>(parameterStatus));
+    std::string message = getWarningMessage(parameter, static_cast<WarningStatus>(parameterStatus));
     if (!message.empty()) {
         return message;
     }
 
-    message = getWarningMessage(parameter, static_cast<WarningStatus>(parameterStatus));
+    message = getBreachMessage(parameter, static_cast<BreachStatus>(parameterStatus));
     return message;
 }
 
