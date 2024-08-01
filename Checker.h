@@ -28,7 +28,7 @@ struct WarningRange {
 BreachStatus getBreachStatus(float value, const BreachRange& range);
 WarningStatus getWarningStatus(float value, const WarningRange& range);
 ParameterStatus getParameterStatus(float value, const BreachRange& breachRange, const WarningRange& warningRange);
-std::string translateStatusToMessage(const std::string& parameter, ParameterStatus status);
+std::string statusToMessageTranslation(const std::string& parameter, ParameterStatus parameterStatus)
 
 bool checkTemperature(float temperature);
 bool checkSoc(float soc);
