@@ -25,9 +25,8 @@ struct WarningRange {
     float highWarning;
 };
 
-
-ParameterStatus getBreachStatus(float value, const BreachRange& range);
-ParameterStatus getWarningStatus(float value, const WarningRange& range);
+BreachStatus getBreachStatus(float value, const BreachRange& range);
+WarningStatus getWarningStatus(float value, const WarningRange& range);
 ParameterStatus getParameterStatus(float value, const BreachRange& breachRange, const WarningRange& warningRange);
 std::string translateStatusToMessage(const std::string& parameter, ParameterStatus status);
 
